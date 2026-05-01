@@ -14,4 +14,4 @@ cohere
 tiktoken
 langchain-openai
 langchain
-langchain-google-genai
+langchain-groq
