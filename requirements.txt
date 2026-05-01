@@ -7,7 +7,7 @@ tqdm
 torch
 torchvision
 sentence-transformers
-qdrant_client==1.6
+qdrant-client
 pyarrow
 openai
 cohere

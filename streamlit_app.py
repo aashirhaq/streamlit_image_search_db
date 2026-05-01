@@ -114,10 +114,10 @@ def vector_db(client, animal_embedding):
 
 	animal_embedding = animal_embedding.tolist()
 	
-	results = client.search(collection_name="animals",
-				query_vector=animal_embedding,
+	results = client.query_points(collection_name="animals",
+				query=animal_embedding,
 				with_payload=True,
-				limit=16)
+				limit=16).points
 
 	return results
 ####################################################################################################################################################
