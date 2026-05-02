@@ -17,6 +17,7 @@ import requests
 import zipfile
 import json
 
+from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
 #from langchain_core.prompts import ChatPromptTemplate
 #from langchain_ollama.llms import OllamaLLM
@@ -221,19 +222,24 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 
 	#openai_api_key = st.secrets["openai_api_key"]
 	
-	if st.secrets["openai_api_key"] != "":
+	openai_key = st.secrets.get("openai_api_key", "")
+	groq_key = st.secrets.get("groq_api_key", "")
+	input_text = "Summarize in 100 words, the most interesting things about the following animal: " + result_image_type
 
-		openai_api_key = st.secrets["openai_api_key"]
-		# llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
-		# input_text = "Summarize in 100 words, the most interesting things about the following animal: " + result_str
-		# response = llm(input_text)
-		# st.write(response)
-
-		llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=openai_api_key)
-		input_text = "Summarize in 100 words, the most interesting things about the following animal: " + result_image_type
+	if openai_key:
+		try:
+			llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7, openai_api_key=openai_key)
+			response = llm.invoke(input_text)
+			st.write(response.content)
+		except Exception:
+			if groq_key:
+				llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
+				response = llm.invoke(input_text)
+				st.write(response.content)
+	elif groq_key:
+		llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 		response = llm.invoke(input_text)
 		st.write(response.content)
-
 	else:
 		st.write(result_str  + ".")
 		st.write("Enter an API Key to learn more about " + result_image_type + 's!')
