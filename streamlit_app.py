@@ -230,15 +230,18 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 		try:
 			llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7, openai_api_key=openai_key)
 			response = llm.invoke(input_text)
+			st.caption("Powered by OpenAI GPT-3.5")
 			st.write(response.content)
 		except Exception:
 			if groq_key:
 				llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 				response = llm.invoke(input_text)
+				st.caption("Powered by Groq (Llama 3.1 8B)")
 				st.write(response.content)
 	elif groq_key:
 		llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 		response = llm.invoke(input_text)
+		st.caption("Powered by Groq (Llama 3.1 8B)")
 		st.write(response.content)
 	else:
 		st.write(result_str  + ".")
