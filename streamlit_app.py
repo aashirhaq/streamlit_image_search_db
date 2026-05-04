@@ -230,19 +230,19 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 		try:
 			llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7, google_api_key=openai_key)
 			response = llm.invoke(input_text)
-			st.caption("Powered by Google Gemini")
+			st.caption("Powered by Google Gemini (gemini-2.5-flash)")
 			st.write(response.content)
 		except Exception as e:
-			st.warning(f"Gemini failed: {e}")
+			print(f"Gemini failed: {e}")
 			if groq_key:
 				llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 				response = llm.invoke(input_text)
-				st.caption("Powered by Groq (Llama 3.1 8B)")
+				st.caption("Powered by Groq (llama-3.1-8b-instant)")
 				st.write(response.content)
 	elif groq_key:
 		llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 		response = llm.invoke(input_text)
-		st.caption("Powered by Groq (Llama 3.1 8B)")
+		st.caption("Powered by Groq (llama-3.1-8b-instant)")
 		st.write(response.content)
 	else:
 		st.write(result_str  + ".")
