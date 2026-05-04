@@ -12,6 +12,6 @@ pyarrow
 openai
 cohere
 tiktoken
-langchain-openai
+langchain-google-genai
 langchain
 langchain-groq

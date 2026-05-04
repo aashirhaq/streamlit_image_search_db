@@ -17,7 +17,7 @@ import requests
 import zipfile
 import json
 
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 #from langchain_core.prompts import ChatPromptTemplate
 #from langchain_ollama.llms import OllamaLLM
@@ -228,9 +228,9 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 
 	if openai_key:
 		try:
-			llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7, openai_api_key=openai_key)
+			llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.7, google_api_key=openai_key)
 			response = llm.invoke(input_text)
-			st.caption("Powered by OpenAI GPT-3.5")
+			st.caption("Powered by Google Gemini")
 			st.write(response.content)
 		except Exception:
 			if groq_key:
