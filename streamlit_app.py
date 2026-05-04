@@ -228,7 +228,7 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 
 	if openai_key:
 		try:
-			llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.7, google_api_key=openai_key)
+			llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7, google_api_key=openai_key)
 			response = llm.invoke(input_text)
 			st.caption("Powered by Google Gemini")
 			st.write(response.content)
