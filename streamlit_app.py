@@ -232,7 +232,8 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 			response = llm.invoke(input_text)
 			st.caption("Powered by Google Gemini")
 			st.write(response.content)
-		except Exception:
+		except Exception as e:
+			st.warning(f"Gemini failed: {e}")
 			if groq_key:
 				llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 				response = llm.invoke(input_text)
