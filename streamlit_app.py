@@ -228,13 +228,12 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 
 	if openai_key:
 		try:
-			llm = ChatGoogleGenerativeAI(model="gemini-robotics-er-1.5-preview", temperature=0.7, google_api_key=openai_key)
+			llm = ChatGoogleGenerativeAI(model="gemini-robotics-er-1.6-preview", temperature=0.7, google_api_key=openai_key)
 			response = llm.invoke(input_text)
-			st.caption("Powered by Google Gemini (gemini-robotics-er-1.5-preview)")
+			st.caption("Powered by Google Gemini (gemini-robotics-er-1.6-preview)")
 			st.write(response.content)
 		except Exception as e:
 			print(f"Gemini Robotics failed: {e}")
-			st.warning(f"Robotics model failed: {e}")
 			try:
 				llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7, google_api_key=openai_key)
 				response = llm.invoke(input_text)
