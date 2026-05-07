@@ -228,17 +228,24 @@ def plot_similar_images_new(image_path, text_input, number_of_images: int = 6):
 
 	if openai_key:
 		try:
-			llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7, google_api_key=openai_key)
+			llm = ChatGoogleGenerativeAI(model="gemini-robotics-er-1.5-preview", temperature=0.7, google_api_key=openai_key)
 			response = llm.invoke(input_text)
-			st.caption("Powered by Google Gemini (gemini-2.5-flash)")
+			st.caption("Powered by Google Gemini (gemini-robotics-er-1.5-preview)")
 			st.write(response.content)
 		except Exception as e:
-			print(f"Gemini failed: {e}")
-			if groq_key:
-				llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
+			print(f"Gemini Robotics failed: {e}")
+			try:
+				llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7, google_api_key=openai_key)
 				response = llm.invoke(input_text)
-				st.caption("Powered by Groq (llama-3.1-8b-instant)")
+				st.caption("Powered by Google Gemini (gemini-2.5-flash)")
 				st.write(response.content)
+			except Exception as e2:
+				print(f"Gemini 2.5 Flash failed: {e2}")
+				if groq_key:
+					llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
+					response = llm.invoke(input_text)
+					st.caption("Powered by Groq (llama-3.1-8b-instant)")
+					st.write(response.content)
 	elif groq_key:
 		llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, groq_api_key=groq_key)
 		response = llm.invoke(input_text)
